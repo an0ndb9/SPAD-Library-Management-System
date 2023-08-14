@@ -44,9 +44,10 @@ public class UsersDao {
         boolean status = false;
         try {
             Connection con = DB.getConnection();
-            String select = "select * from Users where UserName= '" + UserName +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
+            String select = "SELECT * FROM Users WHERE UserName = ?";
+            PreparedStatement ps = con.prepareStatement(select);
+            ps.setString(1, UserName);
+            ResultSet rs = ps.executeQuery();
             status = rs.next();
             con.close();
         } catch (Exception e) {
